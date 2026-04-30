@@ -1,58 +1,99 @@
 {% extends "mail/layout.html" %}
 {% load static %}
 
+{% block title %}Inbox | MailPilot{% endblock %}
+
+{% block body_class %}mailbox-page{% endblock %}
+
 {% block body %}
-    <h2>{{ request.user.email }}</h2>
+<div class="mail-app">
+    <header class="mail-header">
+        <div>
+            <p class="section-kicker">MailPilot</p>
+            <h1>Inbox</h1>
+            <p class="section-copy">Keep messages organized, archive what matters, and reply without leaving the page.</p>
+        </div>
+        <div class="mail-user-chip">
+            <span class="mail-user-chip__dot"></span>
+            <span>{{ request.user.email }}</span>
+            <a class="mail-user-chip__link" href="{% url 'logout' %}">Log out</a>
+        </div>
+    </header>
 
-    <button class="btn btn-sm btn-outline-primary" id="inbox">Inbox</button>
-    <button class="btn btn-sm btn-outline-primary" id="compose">Compose</button>
-    <button class="btn btn-sm btn-outline-primary" id="sent">Sent</button>
-    <button class="btn btn-sm btn-outline-primary" id="archived">Archived</button>
-    <a class="btn btn-sm btn-outline-primary" href="{% url 'logout' %}">Log Out</a>
-    <hr>
+    <div id="mail-status" class="mail-status" aria-live="polite"></div>
 
-    <div id="emails-view">
-    </div>
+    <nav class="mail-tabs" aria-label="Mailboxes">
+        <button class="mail-tab is-active" id="inbox" type="button">Inbox</button>
+        <button class="mail-tab" id="compose" type="button">Compose</button>
+        <button class="mail-tab" id="sent" type="button">Sent</button>
+        <button class="mail-tab" id="archived" type="button">Archived</button>
+    </nav>
 
-    <div id="compose-view">
-        <h3>New Email</h3>
-        <form id="compose-form">
+    <section class="mail-stage" id="emails-view"></section>
+
+    <section class="mail-stage" id="compose-view">
+        <div class="mail-stage__header">
+            <p class="section-kicker">New message</p>
+            <h2>Compose</h2>
+            <p class="section-copy">Write a new mail and send it to one or more recipients.</p>
+        </div>
+        <form id="compose-form" class="compose-form">
             <div class="form-group">
-                From: <input disabled class="form-control" value="{{ request.user.email }}">
+                <label class="field-label" for="compose-from">From</label>
+                <input disabled class="form-control mail-input" id="compose-from" value="{{ request.user.email }}">
             </div>
             <div class="form-group">
-                To: <input id="compose-recipients" class="form-control">
+                <label class="field-label" for="compose-recipients">To</label>
+                <input id="compose-recipients" class="form-control mail-input" placeholder="recipient@example.com">
             </div>
             <div class="form-group">
-                <input class="form-control" id="compose-subject" placeholder="Subject">
+                <label class="field-label" for="compose-subject">Subject</label>
+                <input class="form-control mail-input" id="compose-subject" placeholder="Add a subject">
             </div>
-            <textarea class="form-control" id="compose-body" placeholder="Body"></textarea>
-            <input type="submit" class="btn btn-primary"/>
+            <div class="form-group">
+                <label class="field-label" for="compose-body">Message</label>
+                <textarea class="form-control mail-textarea" id="compose-body" placeholder="Write your message"></textarea>
+            </div>
+            <div class="compose-actions">
+                <button type="submit" class="btn mail-btn mail-btn--primary">Send message</button>
+            </div>
         </form>
-    </div>
+    </section>
 
-    <div id="single-mail-view">
-        <div id="sender">
-            
+    <section class="mail-stage" id="single-mail-view">
+        <div class="mail-detail">
+            <div class="mail-detail__header">
+                <div>
+                    <p class="section-kicker">Message detail</p>
+                    <div id="subject" class="mail-detail__subject"></div>
+                </div>
+                <div class="mail-detail__actions">
+                    <button type="button" class="btn mail-btn mail-btn--secondary" id="archive-btn">Archive</button>
+                    <button type="button" class="btn mail-btn mail-btn--primary" id="reply-btn">Reply</button>
+                </div>
+            </div>
+
+            <div class="mail-meta">
+                <div class="mail-meta__item">
+                    <span class="mail-meta__label">From</span>
+                    <div id="sender" class="mail-meta__value"></div>
+                </div>
+                <div class="mail-meta__item">
+                    <span class="mail-meta__label">To</span>
+                    <div id="recipients" class="mail-meta__value"></div>
+                </div>
+                <div class="mail-meta__item">
+                    <span class="mail-meta__label">Sent</span>
+                    <div id="timestamp" class="mail-meta__value"></div>
+                </div>
+            </div>
+
+            <div id="body" class="mail-body-copy"></div>
         </div>
-
-        <div id="recipients">
-        </div>
-
-        <div id="subject">
-
-        </div>
-
-        <div id="timestamp"></div>
-
-        <div id="body"></div>
-
-        <button id="archive-btn"></button>
-        <button id="reply-btn"> Reply</button>
-    </div>
+    </section>
+</div>
 {% endblock %}
 
 {% block script %}
     <script src="{% static 'mail/inbox.js' %}"></script>
-
 {% endblock %}

@@ -1,24 +1,44 @@
 {% extends "mail/layout.html" %}
 
+{% block title %}Sign In | MailPilot{% endblock %}
+
+{% block body_class %}auth-page{% endblock %}
+
 {% block body %}
-
-    <h2>Login</h2>
-
-    {% if message %}
-        <div>{{ message }}</div>
-    {% endif %}
-
-    <form action="{% url 'login' %}" method="post">
-        {% csrf_token %}
-        <div class="form-group">
-            <input autofocus class="form-control" type="email" name="email" placeholder="Email">
+<div class="auth-layout">
+    <section class="auth-card">
+        <div class="auth-brand">
+            <div class="auth-mark">M</div>
+            <div>
+                <p class="section-kicker">MailPilot</p>
+                <h1>Sign in to your inbox</h1>
+            </div>
         </div>
-        <div class="form-group">
-            <input class="form-control" type="password" name="password" placeholder="Password">
-        </div>
-        <input class="btn btn-primary" type="submit" value="Login">
-    </form>
 
-    Don't have an account? <a href="{% url 'register' %}">Register here.</a>
+        <p class="auth-copy">
+            A cleaner way to review messages, archive threads, and send replies without losing context.
+        </p>
 
+        {% if message %}
+            <div class="auth-alert">{{ message }}</div>
+        {% endif %}
+
+        <form action="{% url 'login' %}" method="post" class="auth-form">
+            {% csrf_token %}
+            <div class="form-group">
+                <label class="field-label" for="login-email">Email</label>
+                <input autofocus class="form-control mail-input" id="login-email" type="email" name="email" placeholder="you@example.com">
+            </div>
+            <div class="form-group">
+                <label class="field-label" for="login-password">Password</label>
+                <input class="form-control mail-input" id="login-password" type="password" name="password" placeholder="Password">
+            </div>
+            <button class="btn mail-btn mail-btn--primary btn-block" type="submit">Login</button>
+        </form>
+
+        <p class="auth-footnote">
+            Don't have an account? <a href="{% url 'register' %}">Register here.</a>
+        </p>
+    </section>
+</div>
 {% endblock %}
