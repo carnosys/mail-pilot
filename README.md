@@ -1,6 +1,6 @@
 # MailPilot
 
-MailPilot is a Django-based email client built for practicing full-stack web development with authentication, mailbox navigation, message composition, archiving, and reply flows.
+MailPilot is a Django-based email client with a polished light product-style interface for practicing full-stack web development with authentication, mailbox navigation, message composition, archiving, and reply flows.
 
 ## Overview
 
@@ -100,9 +100,9 @@ The front-end mailbox is powered by the following routes:
 - `GET /emails/<id>` - fetch a single message
 - `PUT /emails/<id>` - mark a message as read or archived
 
-## Screenshot Placeholders
+## Screenshots
 
-Replace the image paths below with screenshots from your local run.
+The screenshots below were captured from the refreshed UI.
 
 ### Login
 
@@ -122,25 +122,21 @@ Replace the image paths below with screenshots from your local run.
 
 ### Message Detail
 
-![Message detail view](docs/screenshots/message-detail.png)
-
-### Archived Mail
-
-![Archived mail view](docs/screenshots/archive.png)
+![Message detail view](docs/screenshots/message_detail.png)
 
 ## Recommended Screenshot Order
 
-If you want the README to feel complete, capture screenshots in this order:
+If you want to expand the gallery later, capture any additional states in this order:
 
 1. Login page
 2. Registration page
 3. Inbox with a few messages visible
 4. Compose view with filled-in recipient and subject fields
 5. Single message detail view
-6. Archived mailbox
+6. Archived mailbox, if you add one later
 
 ## Notes
 
 - The app uses a local SQLite database, so your test data will remain in `db.sqlite3`.
 - Some compose and reply flows require at least two user accounts so you can send mail between them.
-- The current UI is intentionally simple and functional, which makes screenshots easy to read.
+- The current UI is intentionally clean and product-like, which makes screenshots easy to read.
